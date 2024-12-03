@@ -152,11 +152,72 @@ void compararCartas(Cartas *cartas1, Cartas *cartas2, int atributo)
     }
 }
 
+// função alinhada
+
+void compararAlinhada(Cartas *carta1, Cartas *carta2)
+{
+    // populacão
+    if (carta1->populacao != carta2->populacao)
+    {
+        printf("População foi critério decisivo.\n");
+        if (carta1->populacao > carta2->populacao)
+        {
+            printf("Vencedor %s: ", carta1->nomeDaCidade);
+        }
+        else
+        {
+            printf("Vencedor: %s", carta2->nomeDaCidade);
+        }
+        return;
+    }
+
+    if (carta1->area != carta2->area)
+    {
+        printf("Área foi o critério decisivo.\n");
+        if (carta1->area > carta2->area)
+            printf("Vencedor: %s\n", carta1->nomeDaCidade);
+        else
+            printf("Vencedor: %s\n", carta2->nomeDaCidade);
+        return;
+    }
+
+    if (carta1->pib != carta2->pib)
+    {
+        printf("PIB foi o critério decisivo.\n");
+        if (carta1->pib > carta2->pib)
+            printf("Vencedor: %s\n", carta1->nomeDaCidade);
+        else
+            printf("Vencedor: %s\n", carta2->nomeDaCidade);
+        return;
+    }
+
+    if (carta1->pontosTuristicos != carta2->pontosTuristicos)
+    {
+        printf("Pontos turísticos foi o critério decisivo.\n");
+        if (carta1->pontosTuristicos > carta2->pontosTuristicos)
+            printf("Vencedor: %s\n", carta1->nomeDaCidade);
+        else
+            printf("Vencedor: %s\n", carta2->nomeDaCidade);
+        return;
+    }
+
+    if (carta1->densidadeDemografica != carta2->densidadeDemografica)
+    {
+        printf("Densidade demográfica foi o critério decisivo.\n");
+        if (carta1->densidadeDemografica > carta2->densidadeDemografica)
+            printf("Vencedor: %s\n", carta1->nomeDaCidade);
+        else
+            printf("Vencedor: %s\n", carta2->nomeDaCidade);
+        return;
+    }
+
+    printf("Empate absoluto!\n");
+}
 // Função principal.
 int main()
 {
     Cartas cartas1, cartas2;
-    int atributo;
+    int opcao, atributo;
 
     printf("Cadastrar carta 1:\n");
     capturarDados(&cartas1);
@@ -164,23 +225,46 @@ int main()
     printf("\nCadastrar carta 2:\n");
     capturarDados(&cartas2);
 
-    while (atributo != 0)
+    do
     {
-        printf("\n------ Escolha o atributo para comparar ------\n");
-        printf("1. População\n");
-        printf("2. Área\n");
-        printf("3. PIB\n");
-        printf("4. Pontos turísticos\n");
-        printf("5. Densidade populacional\n");
-        printf("0 - sair do programa");
-        printf("Opção: ");
-        scanf("%d", &atributo);
-        printf("\nCartas cadastradas:\n");
-        exibirCartas(&cartas1);
-        exibirCartas(&cartas2);
+        printf("\n------ Menu Interativo ------\n");
+        printf("1. Comparar por atributo único.\n");
+        printf("2. Comparação aninhada (múltiplos critérios).\n");
+        printf("0. Sair.\n");
+        printf("Escolha uma opção: ");
+        scanf("%d", &opcao);
 
-        compararCartas(&cartas1, &cartas2, atributo);
-    }
+        switch (opcao)
+        {
+        case 1:
+            while (atributo != 0)
+            {
+                printf("\n------ Escolha o atributo para comparar ------\n");
+                printf("1. População\n");
+                printf("2. Área\n");
+                printf("3. PIB\n");
+                printf("4. Pontos turísticos\n");
+                printf("5. Densidade populacional\n");
+                printf("0 - sair do programa");
+                printf("Opção: ");
+                scanf("%d", &atributo);
+                compararCartas(&cartas1, &cartas2, atributo);
+                break;
+            }
+        case 2:
+            compararAlinhada(&cartas1, &cartas2);
+            break;
+        case 0:
+            printf("Saindo do programa ...");
+
+        default:
+            printf("Opção inválida! Tente novamente.\n");
+            break;
+        }
+    } while (opcao != 0);
+
+    exibirCartas(&cartas1);
+    exibirCartas(&cartas2);
 
     return 0;
 }
